@@ -1,7 +1,7 @@
 import java.sql.*;
 
 public class Assignment2 {
-    
+  //OHGOD DELETE THIS LINE  
   // A connection to the database  
   Connection connection;
   
