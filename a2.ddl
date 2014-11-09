@@ -32,6 +32,10 @@ CREATE TABLE country (
     height 		INTEGER 	NOT NULL,
     population	INTEGER 	NOT NULL);
     
+    INSERT INTO country VALUES (001, 'Canada', 5000, 35000000), (002, 'USA', 6000, 350000000), (003, 'United Kingdom', 3000, 60000000), (004, 'Mexico', 2030, 150000000), (005, 'France', 4000, 50000000), (006, 'landlockia', 9000, 10);
+    
+    -- (006, 'Denmark', 1000, 9000000), (007, 'Paraguay', 1240, 15000000), (008, --'Australia', 4013, 22000000), (009, 'Lesotho', 2304, 5000000), (010, 'South --Africa' 2506, 20000000);
+    
 -- The language table contains information about the languages and the percentage of the speakers of the language for each country.
 -- 'cid' is the id of the country.
 -- 'lid' is the id of the language.
@@ -43,7 +47,9 @@ CREATE TABLE language (
     lname 		VARCHAR(20) NOT NULL,
     lpercentage	REAL 		NOT NULL,
 	PRIMARY KEY(cid, lid));
-
+	
+    INSERT INTO language VALUES (001, 001, 'English', 70.5), (002, 001, 'English', 95.4), (003, 001, 'English', 99.5), (005, 001, 'English', 2), (001, 002, 'French', 25.5), (002, 002, 'French', 0.5), (003, 002, 'French', 0.5), (005, 002, 'French', 98), (001, 003, 'Spanish', 4), (002, 003, 'Spanish', 5.1), (004, 003, 'Spanish', 100), (006, 001, 'English', 100);
+    
 -- The religion table contains information about the religions and the percentage of the population in each country that follow the religion.
 -- 'cid' is the id of the country.
 -- 'rid' is the id of the religion.
@@ -55,6 +61,8 @@ CREATE TABLE religion (
     rname 		VARCHAR(20) NOT NULL,
     rpercentage	REAL 		NOT NULL,
 	PRIMARY KEY(cid, rid));
+	
+	INSERT INTO religion VALUES (001, 001, 'Christianity', 69.4), (001, 002, 'Islam', 20.5), (001, 003, 'Judaism', 10.1), (002, 001, 'Christianity', 90.1), (002, 002, 'Islam', 4.8), (002, 003, 'Judaism', 5.1), (003, 001, 'Christianity', 80), (003, 002, 'Islam', 15.1), (003, 003, 'Judaism', 4.9), (004, 001, 'Christianity', 98), (004, 002, 'Islam', 1.3), (004, 003, 'Judaism', .7), (005, 001, 'Christianity', 80), (005, 002, 'Islam', 12.3), (005, 003, 'Judaism', 7.7), (006, 003, 'Judaism', 100);
 
 -- The hdi table contains the human development index of each country per year. (http://en.wikipedia.org/wiki/Human_Development_Index)
 -- 'cid' is the id of the country.
@@ -65,6 +73,8 @@ CREATE TABLE hdi (
     year 		INTEGER 	NOT NULL,
     hdi_score 	REAL 		NOT NULL,
 	PRIMARY KEY(cid, year));
+	
+	INSERT INTO hdi VALUES (001, 2014, .99), (001, 2008, .98), (001, 2010, .97), (002, 2006, .95), (002, 2010, .97), (002, 2014, .96), (003, 2010, .98), (003, 2008, .97), (003, 2012, .98), (004, 2012, .72), (004, 2014, .71), (005, 2008, .96), (005, 2012, .97), (005, 2006, .94), (006, 2014, .98), (006, 2006, .99);
 
 -- The ocean table contains information about oceans on the earth.
 -- 'oid' is the id of the ocean.
@@ -74,6 +84,8 @@ CREATE TABLE ocean (
     oid 		INTEGER 	PRIMARY KEY,
     oname 		VARCHAR(20) NOT NULL,
     depth 		INTEGER 	NOT NULL);
+
+	INSERT INTO ocean VALUES (001, 'Atlantic', 6004), (002, 'Pacific', 5560), (003, 'Arctic', 4302);
 
 -- The neighbour table provides information about the countries and their neighbours.
 -- 'country' refers to the cid of the first country.
@@ -85,6 +97,10 @@ CREATE TABLE neighbour (
     neighbor 	INTEGER 	REFERENCES country(cid) ON DELETE RESTRICT, 
     length 		INTEGER 	NOT NULL,
 	PRIMARY KEY(country, neighbor));
+	
+	
+
+	INSERT INTO neighbour VALUES (001, 002, 20000), (002, 001, 20000), (002, 004, 17000), (004, 002, 17000), (003, 005, 800), (005, 003, 800), (006, 005, 1), (005, 006, 1);
 
 -- The oceanAccess table provides information about the countries which have a border with an ocean.
 -- 'cid' refers to the cid of the country.
@@ -94,6 +110,7 @@ CREATE TABLE oceanAccess (
     oid 	INTEGER 	REFERENCES ocean(oid) ON DELETE RESTRICT, 
     PRIMARY KEY(cid, oid));
 
+	INSERT INTO oceanAccess VALUES (001, 001), (001, 002), (001, 003), (002, 001), (002, 002), (002, 003), (003, 001), (003, 003), (004, 001), (004, 002), (005, 001);
 
 -- The following tables will be used to store the results of your queries. 
 -- Each of them should be populated by your last SQL statement that looks like:
