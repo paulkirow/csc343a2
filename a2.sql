@@ -4,16 +4,30 @@
 
 -- Query 1 statements
 delete from query1;
-create view notHighest as select neighbour.country, neighbour.neighbor from (((select cid, height from country) as c1 join neighbour on cid=neighbor) cross join ((select cid, height from country) as c2 join neighbour as n2 on cid=neighbor)) where neighbour.country=n2.country AND c1.height < c2.height;
-create view highest as select neighbour.country, neighbour.neighbor from neighbour full outer join notHighest on notHighest.country=neighbour.country and notHighest.neighbor=neighbour.neighbor where notHighest.neighbor IS NULL;
-insert into query1 select c1.cid as c1id, c1.cname as c1name, c2.cid as c2id, c2.cname as c2name from (country as c1 join highest as h1 on country=cid) join (country as c2 join highest as h2 on neighbor=cid) on h2.country=h1.country;
-drop view nothighest CASCADE;
+DROP VIEW IF EXISTS countryWithNeighbors CASCADE;
+DROP VIEW IF EXISTS maxNeighbor CASCADE;
+DROP VIEW IF EXISTS maxWithCountry CASCADE;
+CREATE VIEW countryWithNeighbors AS SELECT n.country, n.neighbor, c.cname, c.height
+  FROM neighbour as n
+  INNER JOIN country as c
+  ON n.neighbor = c.cid;
+CREATE VIEW maxNeighbor AS SELECT country, MAX(height) FROM countryWithNeighbors GROUP BY country;
+CREATE VIEW maxWithCountry AS SELECT n.country as c1id, c.cname as c1name, n.neighbor as c2id, n.cname as c2name
+  FROM countryWithNeighbors as n
+  JOIN maxNeighbor as m
+  ON n.height = m.max 
+  AND n.country = m.country
+  JOIN country as c
+  ON c.cid = n.country
+  ORDER BY c1name ASC;
+insert into query1 select * FROM maxWithCountry
+DROP VIEW IF EXISTS maxNeighbor CASCADE;
+DROP VIEW IF EXISTS maxWithCountry CASCADE;
 
 -- Query 2 statements
 
 delete from query2;
 insert into query2 (select country.cid, country.cname from (country left join oceanAccess on country.cid=oceanAccess.cid) where oid IS NULL);
-
 -- Query 3 statements
 
 create view landLocked as select country.cid, country.cname from (country left join oceanAccess on country.cid=oceanAccess.cid) where oid IS NULL;
