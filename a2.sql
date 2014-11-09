@@ -59,8 +59,20 @@ DROP VIEW IF EXISTS landLocked CASCADE;
 DROP VIEW IF EXISTS landNeighbors CASCADE;
 
 -- Query 4 statements
-
-
+DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
+CREATE VIEW countriesNeighborsOceans AS SELECT c.cname, n.country, n.neighbor, a.oid, o.oname
+  FROM country as c
+  JOIN neighbour as n
+  ON n.country = c.cid
+  JOIN oceanAccess as a
+  ON c.cid=a.cid
+  OR n.neighbor=a.cid
+  JOIN ocean as o
+  ON o.oid=a.oid;
+INSERT INTO query4 (
+SELECT DISTINCT(cname), oname 
+  FROM countriesNeighbors);
+DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
 
 -- Query 5 statements
 
