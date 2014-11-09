@@ -5,7 +5,7 @@
 -- Query 1 statements
 delete from query1;
 create view notHighest as select neighbour.country, neighbour.neighbor from (((select cid, height from country) as c1 join neighbour on cid=neighbor) cross join ((select cid, height from country) as c2 join neighbour as n2 on cid=neighbor)) where neighbour.country=n2.country AND c1.height < c2.height;
-create view highest as select neighbour.country, neighbour.neighbor from neighbour full outer join notHighest on notHighest.country=neighbour.country where neighbour.country != notHighest.country or neighbour.neighbor != notHighest.neighbor or notHighest.neighbor IS NULL;
+create view highest as select neighbour.country, neighbour.neighbor from neighbour full outer join notHighest on notHighest.country=neighbour.country and notHighest.neighbor=neighbour.neighbor where notHighest.neighbor IS NULL;
 insert into query1 select c1.cid as c1id, c1.cname as c1name, c2.cid as c2id, c2.cname as c2name from (country as c1 join highest as h1 on country=cid) join (country as c2 join highest as h2 on neighbor=cid) on h2.country=h1.country;
 drop view nothighest CASCADE;
 
