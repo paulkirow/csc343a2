@@ -94,8 +94,34 @@ SELECT *
 DROP VIEW IF EXISTS highestHDI5Years CASCADE;
 
 -- Query 6 statements
-
-
+/*
+DELETE FROM query6;
+DROP VIEW IF EXISTS hdi9To13 CASCADE;
+DROP VIEW IF EXISTS all9To13 CASCADE;
+CREATE VIEW hdi9To13 AS SELECT c.cid, c.cname, hdi.year, hdi.hdi_score as s
+  FROM hdi
+  JOIN country as c
+  ON c.cid = hdi.cid
+  WHERE hdi.year>2008
+  AND hdi.year<2014;
+CREATE VIEW all9To13 AS SELECT cid, COUNT(s) as count
+  FROM hdi9To13
+  GROUP BY cid
+  HAVING COUNT(s)=5;
+CREATE VIEW hdiAll9To13 AS SELECT h.cid, h.cname, h.year, h.s
+  FROM hdi9To13 as h
+  JOIN all9To13 as a
+  ON h.cid=a.cid;
+CREATE VIEW hdiUp9to10 AS SELECT cid, cname, year, s
+  FROM hdiALL9To13 as c
+  JOIN (SELECT cid, MIN(year) FROM hdiALL9TO13 GROUP BY cid) as m
+  ON m.cid=c.cid 
+  AND m.year=c.year
+  WHERE 
+  
+  ON h.cid=a.cid;
+select * from hdiALL9To13 ;
+*/
 
 -- Query 7 statements
 
