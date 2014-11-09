@@ -21,21 +21,42 @@ CREATE VIEW maxWithCountry AS SELECT n.country as c1id, c.cname as c1name, n.nei
   ON c.cid = n.country
   ORDER BY c1name ASC;
 insert into query1 select * FROM maxWithCountry
+DROP VIEW IF EXISTS countryWithNeighbors CASCADE;
 DROP VIEW IF EXISTS maxNeighbor CASCADE;
 DROP VIEW IF EXISTS maxWithCountry CASCADE;
 
 -- Query 2 statements
-
 DELETE FROM query2;
-INSERT INTO query2 (SELECT country.cid, country.cname FROM (country LEFT JOIN oceanAccess ON country.cid=oceanAccess.cid) WHERE oid IS NULL);
--- Query 3 statements
+INSERT INTO query2 (
+SELECT country.cid, country.cname 
+  FROM country 
+  LEFT JOIN oceanAccess 
+  ON country.cid=oceanAccess.cid 
+  WHERE oid IS NULL);
 
-create view landLocked as select country.cid, country.cname from (country left join oceanAccess on country.cid=oceanAccess.cid) where oid IS NULL;
-create view landNeighbours as select * from neighbour join (select cid from landlocked) as l on l.cid=neighbour.country;
-create view notOneNeighbour as select l1.country from landNeighbours as l1 cross join landNeighbours as l2 where l1.cid=l2.cid and l2.neighbor!=l1.neighbor;
-create view landlockedOne as select cid, cname from (landlocked full outer join notOneNeighbour on landLocked.cid=notOneNeighbour.country) where notOneNeighbour.country IS NULL;
-select c1id, c1name, c2id, c2name from (select neighbour.country, country.cid as c1id, country.cname as c1name from country join (landlockedOne join neighbour on cid=country) on neighbour.country=country.cid) as c1 join (select neighbour.country, country.cid as c2id, country.cname as c2name from country join (landlockedOne join neighbour on cid=country) on neighbour.neighbor=country.cid) as c2 on c1.country=c2.country;
-drop view landlocked CASCADE;
+-- Query 3 statements
+DELETE FROM query3;
+DROP VIEW IF EXISTS landLocked CASCADE;
+DROP VIEW IF EXISTS landNeighbors CASCADE;
+CREATE VIEW landLocked AS SELECT country.cid, country.cname 
+  FROM country 
+  LEFT JOIN oceanAccess 
+  ON country.cid=oceanAccess.cid 
+  WHERE oid IS NULL;
+CREATE VIEW landNeighbors AS SELECT l.cid as c1id, l.cname as c1name, n.neighbor as c2id, c.cname as c2name
+  FROM neighbour as n 
+  JOIN landLocked as l 
+  ON l.cid=n.country
+  JOIN country as c
+  ON c.cid = n.neighbor;
+INSERT INTO query3 (
+SELECT landNeighbors.c1id, c1name, c2id, c2name 
+  FROM landNeighbors 
+  JOIN (SELECT c1id FROM landNeighbors GROUP BY c1id HAVING COUNT(c1id)=1) as t 
+  ON t.c1id = landNeighbors.c1id
+  ORDER BY c1name ASC);
+DROP VIEW IF EXISTS landLocked CASCADE;
+DROP VIEW IF EXISTS landNeighbors CASCADE;
 
 -- Query 4 statements
 
