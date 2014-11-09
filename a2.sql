@@ -59,6 +59,7 @@ DROP VIEW IF EXISTS landLocked CASCADE;
 DROP VIEW IF EXISTS landNeighbors CASCADE;
 
 -- Query 4 statements
+DELETE FROM query4;
 DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
 CREATE VIEW countriesNeighborsOceans AS SELECT c.cname, n.country, n.neighbor, a.oid, o.oname
   FROM country as c
@@ -71,12 +72,26 @@ CREATE VIEW countriesNeighborsOceans AS SELECT c.cname, n.country, n.neighbor, a
   ON o.oid=a.oid;
 INSERT INTO query4 (
 SELECT DISTINCT(cname), oname 
-  FROM countriesNeighbors);
+  FROM countriesNeighbors
+  ORDER BY cname ASC, oname DESC);
 DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
 
 -- Query 5 statements
-
-
+DELETE FROM query5;
+DROP VIEW IF EXISTS highestHDI5Years CASCADE;
+CREATE VIEW highestHDI5Years AS SELECT c.cid, c.cname, SUM(hdi_score)/COUNT(hdi_score) as avghdi
+  FROM hdi
+  JOIN country as c
+  ON c.cid = hdi.cid
+  WHERE hdi.year>2008
+  AND hdi.year<2014
+  GROUP BY c.cid, c.cname;
+INSERT INTO query5 (
+SELECT * 
+  FROM highestHDI5Years
+  ORDER BY avghdi DESC
+  LIMIT 10);
+DROP VIEW IF EXISTS highestHDI5Years CASCADE;
 
 -- Query 6 statements
 
