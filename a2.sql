@@ -3,7 +3,7 @@
 -- You can use the "\i a2.sql" command in psql to execute the SQL commands in this file.
 
 -- Query 1 statements
-delete from query1;
+DELETE FROM query1;
 DROP VIEW IF EXISTS countryWithNeighbors CASCADE;
 DROP VIEW IF EXISTS maxNeighbor CASCADE;
 DROP VIEW IF EXISTS maxWithCountry CASCADE;
@@ -26,8 +26,8 @@ DROP VIEW IF EXISTS maxWithCountry CASCADE;
 
 -- Query 2 statements
 
-delete from query2;
-insert into query2 (select country.cid, country.cname from (country left join oceanAccess on country.cid=oceanAccess.cid) where oid IS NULL);
+DELETE FROM query2;
+INSERT INTO query2 (SELECT country.cid, country.cname FROM (country LEFT JOIN oceanAccess ON country.cid=oceanAccess.cid) WHERE oid IS NULL);
 -- Query 3 statements
 
 create view landLocked as select country.cid, country.cname from (country left join oceanAccess on country.cid=oceanAccess.cid) where oid IS NULL;
