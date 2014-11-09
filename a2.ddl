@@ -100,7 +100,7 @@ CREATE TABLE neighbour (
 	
 	
 
-	INSERT INTO neighbour VALUES (001, 002, 20000), (002, 001, 20000), (002, 004, 17000), (004, 002, 17000), (003, 005, 800), (005, 003, 800), (006, 005, 1), (005, 006, 1), (001, 008), (008, 001), (003, 007), (007, 003), (002, 007);
+	INSERT INTO neighbour VALUES (001, 002, 20000), (002, 001, 20000), (002, 004, 17000), (004, 002, 17000), (003, 005, 800), (005, 003, 800), (006, 005, 1), (005, 006, 1), (001, 008, 400), (008, 001, 400), (003, 007, 983), (007, 003, 983), (002, 007, 660), (007, 002, 660);
 
 -- The oceanAccess table provides information about the countries which have a border with an ocean.
 -- 'cid' refers to the cid of the country.
