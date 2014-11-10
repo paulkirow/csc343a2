@@ -167,5 +167,17 @@ SELECT cname, MAX(height+depth)
 DROP VIEW IF EXISTS countryOceans;
 
 -- Query 10 statements
-
+DELETE FROM query10;
+DROP VIEW IF EXISTS sumLength;
+CREATE VIEW sumLength AS SELECT c.cname, SUM(n.length) AS borderslength
+  FROM neighbour AS n
+  JOIN country as c
+  ON c.cid=n.country
+  GROUP BY c.cname;
+INSERT INTO query10 (
+SELECT cname, borderslength
+  FROM sumLength
+  JOIN (SELECT MAX(borderslength) as maxb FROM sumLength) as m
+  ON m.maxb=borderslength);
+DROP VIEW IF EXISTS sumLength;
 
