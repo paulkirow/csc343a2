@@ -16,11 +16,21 @@ public class Assignment2 {
   
   //CONSTRUCTOR
   Assignment2(){
+  try {	//Load JDBC driver
+	Class.forName("org.postgresql.Driver");
+  } catch (ClassNotFoundException e) {
+	return;
+  }
   }
   
   //Using the input parameters, establish a connection to be used for this session. Returns true if connection is sucessful
   public boolean connectDB(String URL, String username, String password){
-      return false;
+    try{ 
+	connection = DriverManager.getConnection(URL,username,password);
+	if (connection == null) {return false;}
+	sql = connection.createStatement();
+	} catch (SQLException e) {return false;}
+	return true;
   }
   
   //Closes the connection. Returns true if closure was sucessful
