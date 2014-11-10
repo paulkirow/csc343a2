@@ -103,7 +103,6 @@ public class Assignment2 {
             preStmt.setFloat(1, newHDI);
             preStmt.setInt(2, cid);
             preStmt.setInt(3, year);
-		System.out.println(preStmt);
             preStmt.executeUpdate();
         } catch (SQLException e) {
             return false;
@@ -124,19 +123,31 @@ public class Assignment2 {
     }
 
     public String listCountryLanguages(int cid) {
-        String stmt = "SELECT oid, oname, depth FROM a2.ocean "
-                + "WHERE oid=?;";
+        String stmt = "SELECT lid, lname, lpercentage*(select population from a2.country where cid=?) as speakers FROM a2.language WHERE cid=? ORDER BY speakers desc;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
-            preStmt.setInt(1, oid);
+	    	System.out.println("qq");
+            preStmt.setInt(1, cid);
+            preStmt.setInt(2, cid);
+	    	System.out.println("qq");
             ResultSet resSet = preStmt.executeQuery();
-            resSet.next();
-            String id = Integer.toString(resSet.getInt("oid"));
-            String name = resSet.getString("oname");
-            String depth = Integer.toString(resSet.getInt("oid"));
-            return id+":"+name+":"+depth;
-        } catch (SQLException e) {}
-        return "";
+	    String total = "";
+
+	    int c = 1;
+            while (resSet.next()) {
+            	String id = Integer.toString(resSet.getInt("lid"));
+            	String name = resSet.getString("lname");
+           	String pop = Integer.toString(resSet.getInt("speakers"));
+		if ((c != 1)) {
+		   total +="#";
+		}
+		total += id+":"+name+":"+pop;
+		c++;
+	    }
+            return total;
+        } catch (SQLException e) {
+            e.printStackTrace();}
+        return "nope";
     }
 
     public boolean updateHeight(int cid, int decrH) {

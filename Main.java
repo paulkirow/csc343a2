@@ -8,6 +8,7 @@ public class Main {
 		a2.insertCountry(9, "Placeistan", 9, 800301);
 		System.out.println(a2.getCountriesNextToOceanCount(001));
 		a2.chgHDI(2, 2006, (float) 0.1);
+		System.out.println(a2.listCountryLanguages(1));
 		a2.disconnectDB();
 	}
 }
