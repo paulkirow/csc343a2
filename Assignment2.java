@@ -72,8 +72,9 @@ public class Assignment2 {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, oid);
             ResultSet resSet = preStmt.executeQuery();
-            rs.next();
+            resSet.next();
             return resSet.getInt("num");
+	    
         } catch (SQLException e) {
         }
         return -1;
@@ -115,6 +116,18 @@ public class Assignment2 {
     }
 
     public String listCountryLanguages(int cid) {
+        String stmt = "SELECT oid, oname, depth FROM a2.ocean "
+                + "WHERE oid=?;";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.setInt(1, oid);
+            ResultSet resSet = preStmt.executeQuery();
+            resSet.next();
+            String id = Integer.toString(resSet.getInt("oid"));
+            String name = resSet.getString("oname");
+            String depth = Integer.toString(resSet.getInt("oid"));
+            return id+":"+name+":"+depth;
+        } catch (SQLException e) {}
         return "";
     }
 
