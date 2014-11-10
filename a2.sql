@@ -151,7 +151,20 @@ SELECT c1.cname AS c1name, c2.cname AS c2name, c1.lname
   ORDER BY lname ASC, c1name DESC);
 DROP VIEW IF EXISTS cMaxLangPerPop;
 
-
+-- Query  9 statements
+DELETE FROM query9;
+DROP VIEW IF EXISTS countryOceans;
+CREATE VIEW countryOceans AS SELECT c.cname, c.height, o.depth
+  FROM country AS c
+  FULL OUTER JOIN oceanAccess AS oa
+  ON c.cid=oa.cid
+  FULL OUTER JOIN ocean AS o
+  ON oa.oid=o.oid;
+INSERT INTO query9(
+SELECT cname, MAX(height+depth)
+  FROM (SELECT cname, height, CASE WHEN depth IS NULL THEN 0 ELSE depth END FROM countryOceans) as c
+  GROUP BY cname);
+DROP VIEW IF EXISTS countryOceans;
 
 -- Query 10 statements
 
