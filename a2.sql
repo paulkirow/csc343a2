@@ -72,7 +72,7 @@ CREATE VIEW countriesNeighborsOceans AS SELECT c.cname, n.country, n.neighbor, a
   ON o.oid=a.oid;
 INSERT INTO query4 (
 SELECT DISTINCT(cname), oname 
-  FROM countriesNeighbors
+  FROM countriesNeighborsOceans
   ORDER BY cname ASC, oname DESC);
 DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
 
