@@ -20,7 +20,7 @@ CREATE VIEW maxWithCountry AS SELECT n.country as c1id, c.cname as c1name, n.nei
   JOIN country as c
   ON c.cid = n.country
   ORDER BY c1name ASC;
-insert into query1 select * FROM maxWithCountry
+insert into query1 select * FROM maxWithCountry;
 DROP VIEW IF EXISTS countryWithNeighbors CASCADE;
 DROP VIEW IF EXISTS maxNeighbor CASCADE;
 DROP VIEW IF EXISTS maxWithCountry CASCADE;
