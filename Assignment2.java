@@ -94,7 +94,18 @@ public class Assignment2 {
     }
 
     public boolean chgHDI(int cid, int year, float newHDI) {
-        return false;
+        String stmt = "UPDATE hdi SET hdi_score=? WHERE cid=? AND year=?;";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.setFloat(1, newHDI);
+            preStmt.setInt(2, cid);
+            preStmt.setInt(3, year);
+		System.out.println(preStmt);
+            preStmt.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteNeighbour(int c1id, int c2id) {
