@@ -22,6 +22,7 @@ public class Assignment2 {
         } catch (ClassNotFoundException e) {
             return;
         }
+
     }
 
     //Using the input parameters, establish a connection to be used for this session. Returns true if connection is sucessful
@@ -32,6 +33,13 @@ public class Assignment2 {
                 return false;
             }
             sql = connection.createStatement();
+	try {
+	    String stmt = "SET search_path to a2" + ";";
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            ResultSet resSet = preStmt.executeQuery();
+	} catch (SQLException e) {
+	 return false;
+	}
         } catch (SQLException e) {
             return false;
         }
@@ -51,7 +59,7 @@ public class Assignment2 {
 
     public boolean insertCountry(int cid, String name, int height, int population) {
         String stmt = "INSERT INTO country "
-                + "VALUES (?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?);";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, cid);
@@ -67,13 +75,16 @@ public class Assignment2 {
 
     public int getCountriesNextToOceanCount(int oid) {
         String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess "
-                + "WHERE oid=?";
+                + "WHERE oid=?" + ";";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, oid);
             ResultSet resSet = preStmt.executeQuery();
-            return resSet.getInt("num");
+	    while (resSet.next()) {
+            	return resSet.getInt("num");
+	    }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return -1;
     }
