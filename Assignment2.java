@@ -100,6 +100,14 @@ public class Assignment2 {
     }
 
     public boolean deleteNeighbour(int c1id, int c2id) {
+        String stmt = "DELETE FROM a2.neighbour "
+                + "WHERE country=? OR neighbor=?;";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.setInt(1, c1id);
+            preStmt.setInt(2, c2id);
+            if (preStmt.executeUpdate() == 2) {return true;}
+        } catch (SQLException e) {}
         return false;
     }
 
