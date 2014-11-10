@@ -152,7 +152,18 @@ public class Assignment2 {
     }
 
     public boolean updateDB() {
-        return false;
+        String stmt = "DROP TABLE IF EXISTS oceanAccess;" +
+                "CREATE TABLE mostPopulousCountries (cid INTEGER, " +
+                "cname VARCHAR(20)); INSERT INTO mostPopulousCountries "+
+                "SELECT cid, cname FROM country WHERE population>100000000";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+        
     }
 
 }
