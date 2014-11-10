@@ -97,7 +97,7 @@ DROP VIEW IF EXISTS highestHDI5Years CASCADE;
 
 DELETE FROM query6;
 create view increasing as select hdi.cid from hdi full outer join (select h1.cid, h1.year, h1.hdi_score from (hdi as h1 cross join hdi as h2) where h1.year > h2.year AND h2.year <= 2013 and h1.year >= 2009 and h1.year <= 2013 and h1.cid=h2.cid AND h1.hdi_score<h2.hdi_score) as h3 on hdi.cid=h3.cid where h3.cid is null;
-INSERT INTO query6 select country.cid, country.cname from country join increasing on country.cid=increasing.cid;
+INSERT INTO query6 select country.cid, country.cname from country join increasing on country.cid=increasing.cid GROUP BY country.cid, country.cname;
 DROP VIEW increasing;
 
 -- Query 7 statements
