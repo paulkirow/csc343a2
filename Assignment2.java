@@ -140,7 +140,16 @@ public class Assignment2 {
     }
 
     public boolean updateHeight(int cid, int decrH) {
-        return false;
+        String stmt = "UPDATE a2.country SET height=height-? WHERE cid=?;";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.setFloat(1, decrH);
+            preStmt.setInt(2, cid);
+            preStmt.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean updateDB() {
