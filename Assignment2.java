@@ -43,7 +43,7 @@ public class Assignment2 {
 			return false;
 		}
   }
-    
+  
   public boolean insertCountry (int cid, String name, int height, int population) {
 	String stmt = "INSERT INTO country " +
                    "VALUES (?, ?, ?, ?)";
@@ -56,11 +56,19 @@ public class Assignment2 {
 	catch (SQLException e) {return false;}
 	return true;
   }
-  
+
   public int int getCountriesNextToOceanCount(int oid) {
-	return -1;  
+	String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess " +
+                   "WHERE oid=?";
+	PreparedStatement preStmt = connection.preparedStatement(stmt);
+	preStmt.setString(1,oid);
+	try {
+		ResultSet rs = preStmt.executeUpdate(sql);
+		return re.getInt("num");
+	}
+	catch (SQLException e) {return -1;}
   }
-   
+ 
   public String getOceanInfo(int oid){
    return "";
   }
