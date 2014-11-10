@@ -130,10 +130,26 @@ INSERT INTO query7 (
 DROP VIEW totalReligion;
 
 -- Query 8 statements
-
-create view sameLang as select cid, lid, lname, MAX(lpercentage) from language group by cid, lid;
-
-Query 9 statements
+DELETE FROM query8;
+DROP VIEW IF EXISTS cMaxLangPerPop;
+CREATE VIEW cMaxLangPerPop AS SELECT c.cid, c.cname, l.lname
+  FROM country AS c
+  JOIN language AS l
+  ON c.cid=l.cid
+  JOIN (SELECT cid, MAX(lpercentage) AS maxp FROM language GROUP BY cid) as m
+  ON c.cid=m.cid
+  AND l.lpercentage = m.maxp
+  GROUP BY c.cid, c.cname, l.lname;
+INSERT INTO query8(
+SELECT c1.cname AS c1name, c2.cname AS c2name, c1.lname
+  FROM cMaxLangPerPop AS c1
+  JOIN neighbour AS n
+  ON c1.cid=n.country
+  JOIN cMaxLangPerPop AS c2
+  ON c2.cid=n.neighbor
+  WHERE c1.lname=c2.lname
+  ORDER BY lname ASC, c1name DESC);
+DROP VIEW IF EXISTS cMaxLangPerPop;
 
 
 
