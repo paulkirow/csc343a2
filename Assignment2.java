@@ -22,7 +22,6 @@ public class Assignment2 {
         } catch (ClassNotFoundException e) {
             return;
         }
-
     }
 
     //Using the input parameters, establish a connection to be used for this session. Returns true if connection is sucessful
@@ -33,13 +32,6 @@ public class Assignment2 {
                 return false;
             }
             sql = connection.createStatement();
-	try {
-	    String stmt = "SET search_path to a2" + ";";
-            PreparedStatement preStmt = connection.prepareStatement(stmt);
-            ResultSet resSet = preStmt.executeQuery();
-	} catch (SQLException e) {
-	 return false;
-	}
         } catch (SQLException e) {
             return false;
         }
@@ -58,7 +50,7 @@ public class Assignment2 {
     }
 
     public boolean insertCountry(int cid, String name, int height, int population) {
-        String stmt = "INSERT INTO country "
+        String stmt = "INSERT INTO a2.country "
                 + "VALUES (?, ?, ?, ?);";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
@@ -74,22 +66,32 @@ public class Assignment2 {
     }
 
     public int getCountriesNextToOceanCount(int oid) {
-        String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess "
-                + "WHERE oid=?" + ";";
+        String stmt = "SELECT COUNT(cid) AS num FROM a2.oceanAccess "
+                + "WHERE oid=?;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, oid);
             ResultSet resSet = preStmt.executeQuery();
-	    while (resSet.next()) {
-            	return resSet.getInt("num");
-	    }
+            rs.next();
+            return resSet.getInt("num");
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return -1;
     }
 
     public String getOceanInfo(int oid) {
+        String stmt = "SELECT oid, oname, depth FROM a2.ocean "
+                + "WHERE oid=?;";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.setInt(1, oid);
+            ResultSet resSet = preStmt.executeQuery();
+            resSet.next();
+            String id = Integer.toString(resSet.getInt("oid"));
+            String name = resSet.getString("oname");
+            String depth = Integer.toString(resSet.getInt("oid"));
+            return id+":"+name+":"+depth;
+        } catch (SQLException e) {}
         return "";
     }
 
