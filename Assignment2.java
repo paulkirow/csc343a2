@@ -37,7 +37,7 @@ public class Assignment2 {
   public boolean disconnectDB(){
 	try {
 		connection.close();  
-		return true
+		return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -56,6 +56,7 @@ public class Assignment2 {
 	catch (SQLException e) {return false;}
 	return true;
   }
+<<<<<<< HEAD
 
   public int int getCountriesNextToOceanCount(int oid) {
 	String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess " +
@@ -67,6 +68,11 @@ public class Assignment2 {
 		return re.getInt("num");
 	}
 	catch (SQLException e) {return -1;}
+=======
+  
+  public int getCountriesNextToOceanCount(int oid) {
+	return -1;  
+>>>>>>> origin/master
   }
  
   public String getOceanInfo(int oid){
@@ -77,7 +83,7 @@ public class Assignment2 {
    return false;
   }
 
-  public boolean deleteNeighbour(int c1id, c2id){
+  public boolean deleteNeighbour(int c1id, int c2id){
    return false;        
   }
   
