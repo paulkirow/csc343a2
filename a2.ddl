@@ -32,7 +32,7 @@ CREATE TABLE country (
     height 		INTEGER 	NOT NULL,
     population	INTEGER 	NOT NULL);
     
-    INSERT INTO country VALUES (001, 'Canada', 5000, 35000000), (002, 'USA', 6000, 350000000), (003, 'United Kingdom', 3000, 60000000), (004, 'Mexico', 2030, 150000000), (005, 'France', 4000, 50000000), (006, 'landlockia', 9000, 10), (007, 'makeupia', 5030, 100503), (008, 'zimnoway', 2405, 501294);
+    INSERT INTO country VALUES (001, 'Canada', 5000, 35000000), (002, 'USA', 6000, 35000000), (003, 'United Kingdom', 3000, 60000000), (004, 'Mexico', 2030, 15000000), (005, 'France', 4000, 50000000), (006, 'landlockia', 9000, 10), (007, 'makeupia', 5030, 100503), (008, 'zimnoway', 2405, 501294);
     
     -- (006, 'Denmark', 1000, 9000000), (007, 'Paraguay', 1240, 15000000), (008, --'Australia', 4013, 22000000), (009, 'Lesotho', 2304, 5000000), (010, 'South --Africa' 2506, 20000000);
     
@@ -48,7 +48,7 @@ CREATE TABLE language (
     lpercentage	REAL 		NOT NULL,
 	PRIMARY KEY(cid, lid));
 	
-    INSERT INTO language VALUES (001, 001, 'English', 70.5), (002, 001, 'English', 95.4), (003, 001, 'English', 99.5), (005, 001, 'English', 2), (001, 002, 'French', 25.5), (002, 002, 'French', 0.5), (003, 002, 'French', 0.5), (005, 002, 'French', 98), (001, 003, 'Spanish', 4), (002, 003, 'Spanish', 5.1), (004, 003, 'Spanish', 100), (006, 001, 'English', 100), (007, 002, 'French', 90), (007, 003, 'Spanish', 10), (008, 001, 'English', 60), (008, 003, 'Spanish', 40) ;
+    INSERT INTO language VALUES (001, 001, 'English', .705), (002, 001, 'English', .954), (003, 001, 'English', .995), (005, 001, 'English', .002), (001, 002, 'French', .255), (002, 002, 'French', .005), (003, 002, 'French', .005), (005, 002, 'French', .98), (001, 003, 'Spanish', .04), (002, 003, 'Spanish', .051), (004, 003, 'Spanish', 1.00), (006, 001, 'English', 1.00), (007, 002, 'French', .90), (007, 003, 'Spanish', .10), (008, 001, 'English', .60), (008, 003, 'Spanish', .40) ;
     
 -- The religion table contains information about the religions and the percentage of the population in each country that follow the religion.
 -- 'cid' is the id of the country.
@@ -62,7 +62,7 @@ CREATE TABLE religion (
     rpercentage	REAL 		NOT NULL,
 	PRIMARY KEY(cid, rid));
 	
-	INSERT INTO religion VALUES (001, 001, 'Christianity', 69.4), (001, 002, 'Islam', 20.5), (001, 003, 'Judaism', 10.1), (002, 001, 'Christianity', 90.1), (002, 002, 'Islam', 4.8), (002, 003, 'Judaism', 5.1), (003, 001, 'Christianity', 80), (003, 002, 'Islam', 15.1), (003, 003, 'Judaism', 4.9), (004, 001, 'Christianity', 98), (004, 002, 'Islam', 1.3), (004, 003, 'Judaism', .7), (005, 001, 'Christianity', 80), (005, 002, 'Islam', 12.3), (005, 003, 'Judaism', 7.7), (006, 003, 'Judaism', 100), (007, 002, 'Islam', 100), (008, 003, 'Judaism', 100);
+	INSERT INTO religion VALUES (001, 001, 'Christianity', .694), (001, 002, 'Islam', .205), (001, 003, 'Judaism', .101), (002, 001, 'Christianity', .901), (002, 002, 'Islam', .048), (002, 003, 'Judaism', .051), (003, 001, 'Christianity', .80), (003, 002, 'Islam', .151), (003, 003, 'Judaism', .049), (004, 001, 'Christianity', .98), (004, 002, 'Islam', .013), (004, 003, 'Judaism', .007), (005, 001, 'Christianity', .80), (005, 002, 'Islam', .123), (005, 003, 'Judaism', .77), (006, 003, 'Judaism', 1.00), (007, 002, 'Islam', 1.00), (008, 003, 'Judaism', 1.00);
 
 -- The hdi table contains the human development index of each country per year. (http://en.wikipedia.org/wiki/Human_Development_Index)
 -- 'cid' is the id of the country.

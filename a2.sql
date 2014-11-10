@@ -4,9 +4,9 @@
 
 -- Query 1 statements
 DELETE FROM query1;
-DROP VIEW IF EXISTS countryWithNeighbors CASCADE;
-DROP VIEW IF EXISTS maxNeighbor CASCADE;
-DROP VIEW IF EXISTS maxWithCountry CASCADE;
+--DROP VIEW IF EXISTS countryWithNeighbors CASCADE;
+--DROP VIEW IF EXISTS maxNeighbor CASCADE;
+--DROP VIEW IF EXISTS maxWithCountry CASCADE;
 CREATE VIEW countryWithNeighbors AS SELECT n.country, n.neighbor, c.cname, c.height
   FROM neighbour as n
   INNER JOIN country as c
@@ -36,8 +36,8 @@ SELECT country.cid, country.cname
 
 -- Query 3 statements
 DELETE FROM query3;
-DROP VIEW IF EXISTS landLocked CASCADE;
-DROP VIEW IF EXISTS landNeighbors CASCADE;
+--DROP VIEW IF EXISTS landLocked CASCADE;
+--DROP VIEW IF EXISTS landNeighbors CASCADE;
 CREATE VIEW landLocked AS SELECT country.cid, country.cname 
   FROM country 
   LEFT JOIN oceanAccess 
@@ -60,7 +60,7 @@ DROP VIEW IF EXISTS landNeighbors CASCADE;
 
 -- Query 4 statements
 DELETE FROM query4;
-DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
+--DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
 CREATE VIEW countriesNeighborsOceans AS SELECT c.cname, n.country, n.neighbor, a.oid, o.oname
   FROM country as c
   JOIN neighbour as n
@@ -78,7 +78,7 @@ DROP VIEW IF EXISTS countriesNeighborsOceans CASCADE;
 
 -- Query 5 statements
 DELETE FROM query5;
-DROP VIEW IF EXISTS highestHDI5Years CASCADE;
+--DROP VIEW IF EXISTS highestHDI5Years CASCADE;
 CREATE VIEW highestHDI5Years AS SELECT c.cid, c.cname, SUM(hdi_score)/COUNT(hdi_score) as avghdi
   FROM hdi
   JOIN country as c
@@ -94,38 +94,18 @@ SELECT *
 DROP VIEW IF EXISTS highestHDI5Years CASCADE;
 
 -- Query 6 statements
-/*
+
 DELETE FROM query6;
-DROP VIEW IF EXISTS hdi9To13 CASCADE;
-DROP VIEW IF EXISTS all9To13 CASCADE;
-CREATE VIEW hdi9To13 AS SELECT c.cid, c.cname, hdi.year, hdi.hdi_score as s
-  FROM hdi
-  JOIN country as c
-  ON c.cid = hdi.cid
-  WHERE hdi.year>2008
-  AND hdi.year<2014;
-CREATE VIEW all9To13 AS SELECT cid, COUNT(s) as count
-  FROM hdi9To13
-  GROUP BY cid
-  HAVING COUNT(s)=5;
-CREATE VIEW hdiAll9To13 AS SELECT h.cid, h.cname, h.year, h.s
-  FROM hdi9To13 as h
-  JOIN all9To13 as a
-  ON h.cid=a.cid;
-CREATE VIEW hdiUp9to10 AS SELECT cid, cname, year, s
-  FROM hdiALL9To13 as c
-  JOIN (SELECT cid, MIN(year) FROM hdiALL9TO13 GROUP BY cid) as m
-  ON m.cid=c.cid 
-  AND m.year=c.year
-  WHERE 
-  
-  ON h.cid=a.cid;
-select * from hdiALL9To13 ;
-*/
+create view increasing as select hdi.cid from hdi full outer join (select h1.cid, h1.year, h1.hdi_score from (hdi as h1 cross join hdi as h2) where h1.year > h2.year AND h2.year <= 2013 and h1.year >= 2009 and h1.year <= 2013 and h1.cid=h2.cid AND h1.hdi_score<h2.hdi_score) as h3 on hdi.cid=h3.cid where h3.cid is null;
+INSERT INTO query6 select country.cid, country.cname from country join increasing on country.cid=increasing.cid;
+DROP VIEW increasing;
 
 -- Query 7 statements
 
-
+DELETE FROM query7;
+create view totalReligion as select rid, rname, rpercentage * population as totalbelievers from religion join country on religion.cid=country.cid;
+insert into query7 select totalReligion.rid, totalReligion.rname, SUM(totalReligion.totalBelievers) from totalReligion cross join totalReligion as r1 where totalReligion.rname=r1.rname group by totalreligion.rid, totalreligion.rname;
+drop view totalReligion;
 
 -- Query 8 statements
 
