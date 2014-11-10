@@ -32,9 +32,6 @@ public class Assignment2 {
                 return false;
             }
             sql = connection.createStatement();
-            String stmt = "SET search_path to a2;";
-            PreparedStatement preStmt = connection.prepareStatement(stmt);
-            preStmt.executeQuery();
         } catch (SQLException e) {
             return false;
         }
@@ -53,7 +50,7 @@ public class Assignment2 {
     }
 
     public boolean insertCountry(int cid, String name, int height, int population) {
-        String stmt = "INSERT INTO country "
+        String stmt = "INSERT INTO a2.country "
                 + "VALUES (?, ?, ?, ?);";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
@@ -69,7 +66,7 @@ public class Assignment2 {
     }
 
     public int getCountriesNextToOceanCount(int oid) {
-        String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess "
+        String stmt = "SELECT COUNT(cid) AS num FROM a2.oceanAccess "
                 + "WHERE oid=?;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
@@ -83,7 +80,7 @@ public class Assignment2 {
     }
 
     public String getOceanInfo(int oid) {
-        String stmt = "SELECT oid, oname, depth FROM ocean "
+        String stmt = "SELECT oid, oname, depth FROM a2.ocean "
                 + "WHERE oid=?;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
