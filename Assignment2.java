@@ -126,10 +126,8 @@ public class Assignment2 {
         String stmt = "SELECT lid, lname, lpercentage*(select population from a2.country where cid=?) as speakers FROM a2.language WHERE cid=? ORDER BY speakers desc;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
-	    	System.out.println("qq");
             preStmt.setInt(1, cid);
             preStmt.setInt(2, cid);
-	    	System.out.println("qq");
             ResultSet resSet = preStmt.executeQuery();
 	    String total = "";
 
@@ -145,22 +143,12 @@ public class Assignment2 {
 		c++;
 	    }
             return total;
-        } catch (SQLException e) {
-            e.printStackTrace();}
-        return "nope";
+        } catch (SQLException e) {}
+        return "";
     }
 
     public boolean updateHeight(int cid, int decrH) {
-        String stmt = "UPDATE a2.country SET height=height-? WHERE cid=?;";
-        try {
-            PreparedStatement preStmt = connection.prepareStatement(stmt);
-            preStmt.setFloat(1, decrH);
-            preStmt.setInt(2, cid);
-            preStmt.executeUpdate();
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     public boolean updateDB() {
