@@ -45,7 +45,16 @@ public class Assignment2 {
   }
     
   public boolean insertCountry (int cid, String name, int height, int population) {
-   return false;
+	String stmt = "INSERT INTO country " +
+                   "VALUES (?, ?, ?, ?)";
+	PreparedStatement preStmt = connection.preparedStatement(stmt);
+	preStmt.setString(1,cid);
+	preStmt.setString(2,name);
+	preStmt.setString(3,height);
+	preStmt.setString(4,population);
+	try {preStmt.executeUpdate(sql);}
+	catch (SQLException e) {return false;}
+	return true;
   }
   
   public int int getCountriesNextToOceanCount(int oid) {
