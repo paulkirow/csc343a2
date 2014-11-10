@@ -54,10 +54,10 @@ public class Assignment2 {
                 + "VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
-            preStmt.setString(1, Integer.toString(cid));
+            preStmt.setInt(1, cid);
             preStmt.setString(2, name);
-            preStmt.setString(3, Integer.toString(height));
-            preStmt.setString(4, Integer.toString(population));
+            preStmt.setInt(3, height);
+            preStmt.setInt(4, population);
             preStmt.executeUpdate();
         } catch (SQLException e) {
             return false;
@@ -70,7 +70,7 @@ public class Assignment2 {
                 + "WHERE oid=?";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
-            preStmt.setString(1, Integer.toString(oid));
+            preStmt.setInt(1, oid);
             ResultSet resSet = preStmt.executeQuery();
             return resSet.getInt("num");
         } catch (SQLException e) {
