@@ -56,7 +56,6 @@ public class Assignment2 {
 	catch (SQLException e) {return false;}
 	return true;
   }
-<<<<<<< HEAD
 
   public int int getCountriesNextToOceanCount(int oid) {
 	String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess " +
@@ -68,11 +67,9 @@ public class Assignment2 {
 		return re.getInt("num");
 	}
 	catch (SQLException e) {return -1;}
-=======
   
   public int getCountriesNextToOceanCount(int oid) {
-	return -1;  
->>>>>>> origin/master
+	return -1;
   }
  
   public String getOceanInfo(int oid){
