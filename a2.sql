@@ -96,22 +96,22 @@ DROP VIEW IF EXISTS highestHDI5Years CASCADE;
 -- Query 6 statements
 
 DELETE FROM query6;
-create view increasing as select hdi.cid from hdi full outer join (select h1.cid, h1.year, h1.hdi_score from (hdi as h1 cross join hdi as h2) where h1.year > h2.year AND h2.year <= 2013 and h1.year >= 2009 and h1.year <= 2013 and h1.cid=h2.cid AND h1.hdi_score<h2.hdi_score) as h3 on hdi.cid=h3.cid where h3.cid is null;
-INSERT INTO query6 select country.cid, country.cname from country join increasing on country.cid=increasing.cid GROUP BY country.cid, country.cname;
+create view increasing as select hdi.cid from hdi full outer join (select h1.cid, h1.year, h1.hdi_score from (hdi as h1 cross join hdi as h2) where h1.year > h2.year AND h2.year <= 2013 AND h2.year >= 2009 and h1.year >= 2009 and h1.year <= 2013 and h1.cid=h2.cid AND h1.hdi_score<h2.hdi_score) as h3 on hdi.cid=h3.cid where h3.cid is null;
+INSERT INTO query6 select country.cid, country.cname from country join increasing on country.cid=increasing.cid GROUP BY country.cid, country.cname ORDER BY country.cid;
 DROP VIEW increasing;
 
 -- Query 7 statements
 
 DELETE FROM query7;
 create view totalReligion as select rid, rname, rpercentage * population as totalbelievers from religion join country on religion.cid=country.cid;
-insert into query7 select totalReligion.rid, totalReligion.rname, SUM(totalReligion.totalBelievers) from totalReligion cross join totalReligion as r1 where totalReligion.rname=r1.rname group by totalreligion.rid, totalreligion.rname;
+insert into query7 select totalReligion.rid, totalReligion.rname, SUM(totalReligion.totalBelievers) from totalReligion cross join totalReligion as r1 where totalReligion.rname=r1.rname group by totalreligion.rid, totalreligion.rname ORDER BY totalReligion.rid;
 drop view totalReligion;
 
 -- Query 8 statements
 
+create view sameLang as select cid, lid, lname, MAX(lpercentage) from language group by cid, lid;
 
-
--- Query 9 statements
+Query 9 statements
 
 
 
