@@ -148,14 +148,24 @@ public class Assignment2 {
     }
 
     public boolean updateHeight(int cid, int decrH) {
-        return false;
+         String stmt = "UPDATE a2.country SET height=height-? WHERE cid=?;";
+	 try {
+		PreparedStatement preStmt = connection.prepareStatement(stmt);
+		preStmt.setFloat(1, decrH);
+		preStmt.setInt(2, cid);
+		preStmt.executeUpdate();
+	 } catch (SQLException e) {
+	 	return false;
+    	 }
+	 return true;
     }
 
     public boolean updateDB() {
-        String stmt = "DROP TABLE IF EXISTS oceanAccess;" +
+
+        String stmt = "SET search_path TO A2;DROP TABLE IF EXISTS mostPopulousCountries ;" +
                 "CREATE TABLE mostPopulousCountries (cid INTEGER, " +
                 "cname VARCHAR(20)); INSERT INTO mostPopulousCountries "+
-                "SELECT cid, cname FROM country WHERE population>100000000";
+                "SELECT cid, cname FROM country WHERE population>100000000;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.executeUpdate();
