@@ -113,7 +113,8 @@ INSERT INTO query6 SELECT country.cid, country.cname
   FROM country 
   JOIN increasing 
   ON country.cid=increasing.cid 
-  GROUP BY country.cid, country.cname;
+  GROUP BY country.cid, country.cname
+  ORDER BY country.cname ASC;
 DROP VIEW increasing;
 
 -- Query 7 statements
