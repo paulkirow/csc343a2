@@ -17,11 +17,8 @@ public class Assignment2 {
   //CONSTRUCTOR
   Assignment2(){
   try {	//Load JDBC driver
-	System.out.println("this is starting to be initialized");
 	Class.forName("org.postgresql.Driver");
-	System.out.println("this initialized");
   } catch (ClassNotFoundException e) {
-	System.out.println("this is not initialized");
 	return;
   }
   }
@@ -29,26 +26,20 @@ public class Assignment2 {
   //Using the input parameters, establish a connection to be used for this session. Returns true if connection is sucessful
   public boolean connectDB(String URL, String username, String password){
     try{ 
-	System.out.println("this started.");
 	connection = DriverManager.getConnection(URL,username,password);
-	System.out.println("this connected! 2");
-	if (connection == null) {System.out.println("this failed to connect 1!");
-	return false;}
+	if (connection == null) {return false;}
 	sql = connection.createStatement();
-	System.out.println("this connected!");
-	} catch (SQLException e) {	System.out.println("this failed to connect 2!");
-	return false;}
+	} catch (SQLException e) {return false;}
 	return true;
   }
   
   //Closes the connection. Returns true if closure was sucessful
   public boolean disconnectDB(){
 	try {
- 		System.out.println("this is starting to close!");
-		connection.close();
- 		System.out.println("this closed!");
+		connection.close();  
 		return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
   }
