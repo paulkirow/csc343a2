@@ -25,8 +25,13 @@ public class Assignment2 {
   
   //Closes the connection. Returns true if closure was sucessful
   public boolean disconnectDB(){
+	try {
 		connection.close();  
-		return true	  
+		return true
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
   }
     
   public boolean insertCountry (int cid, String name, int height, int population) {
