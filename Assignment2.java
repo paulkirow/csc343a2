@@ -51,7 +51,7 @@ public class Assignment2 {
 
     public boolean insertCountry(int cid, String name, int height, int population) {
         String stmt = "INSERT INTO country "
-                + "VALUES (?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?);";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, cid);
@@ -67,11 +67,12 @@ public class Assignment2 {
 
     public int getCountriesNextToOceanCount(int oid) {
         String stmt = "SELECT COUNT(cid) AS num FROM oceanAccess "
-                + "WHERE oid=?";
+                + "WHERE oid=?;";
         try {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, oid);
             ResultSet resSet = preStmt.executeQuery();
+            rs.next();
             return resSet.getInt("num");
         } catch (SQLException e) {
         }
@@ -79,6 +80,17 @@ public class Assignment2 {
     }
 
     public String getOceanInfo(int oid) {
+        String stmt = "SELECT oid, oname, depth FROM ocean "
+                + "WHERE oid=?;";
+        try {
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.setInt(1, oid);
+            ResultSet resSet = preStmt.executeQuery();
+            String id = Integer.toString(resSet.getInt("oid"));
+            String name = resSet.getString("oname");
+            String depth = Integer.toString(resSet.getInt("oid"));
+            return id+":"+name+":"+depth;
+        } catch (SQLException e) {}
         return "";
     }
 
