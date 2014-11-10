@@ -32,6 +32,9 @@ public class Assignment2 {
                 return false;
             }
             sql = connection.createStatement();
+            String stmt = "SET search_path to a2;";
+            PreparedStatement preStmt = connection.prepareStatement(stmt);
+            preStmt.executeQuery();
         } catch (SQLException e) {
             return false;
         }
@@ -86,6 +89,7 @@ public class Assignment2 {
             PreparedStatement preStmt = connection.prepareStatement(stmt);
             preStmt.setInt(1, oid);
             ResultSet resSet = preStmt.executeQuery();
+            resSet.next();
             String id = Integer.toString(resSet.getInt("oid"));
             String name = resSet.getString("oname");
             String depth = Integer.toString(resSet.getInt("oid"));
